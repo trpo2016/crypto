@@ -73,6 +73,38 @@ const ciphers = {
     decode: function (key, text){
       return this.encode((-1)*key, text);
     }
+  },
+
+  vigenere: {
+    encode: function (key, text){
+      key = helpers.filterKey(key);
+      let result = "";
+      let j = 0;
+
+      text.split("").forEach((curr, index) => {
+        let c = curr.charCodeAt(0);
+        if (helpers.isUpper(c)) {
+          result += String.fromCharCode((c - 65 + key[j % key.length]) % 26 + 65); // Upper
+          j++;
+        }
+        else if (helpers.isLower(c)) {
+          result += String.fromCharCode((c - 97 + key[j % key.length]) % 26 + 97); // Lower
+          j++;
+        }
+        else result += curr // Copy
+      });
+
+      return result;
+    },
+
+    decode: function (key, text){
+      key = helpers.filterKey(key);
+      for (let i = 0; i < key.length; i++){
+        key[i] = (26 - key[i]) % 26;
+      }
+
+      return this.encode(key, text);
+    }
   }
 };
 
