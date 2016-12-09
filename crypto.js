@@ -30,3 +30,28 @@ const helpers = {
     else return key;
   }
 };
+
+const ciphers = {
+  ceasar: {
+    encode: function (key, text){
+      let result = "";
+      text.split("").forEach((curr, index) => {
+        let c = curr.charCodeAt(0);
+        if (helpers.isUpper(c)) result += String.fromCharCode((c - 65 + key) % 26 + 65) // Upper
+        else if (helpers.isLower(c)) result += String.fromCharCode((c - 97 + key) % 26 + 97) // Lower
+        else result += curr // Copy
+      });
+
+      return result;
+    },
+
+    decode: function (key, text){
+      return this.encode((-1)*key, text);
+    }
+  }
+};
+
+module.exports = {
+  ciphers,
+  helpers
+};
