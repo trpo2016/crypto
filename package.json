@@ -1,0 +1,11 @@
+{
+  "name": "Crypto",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alexander",
+  "license": "MIT",
+  "dependencies": {
+    "command-line-args": "^3.0.4",
+    "command-line-usage": "^3.0.8"
+  }
+}
