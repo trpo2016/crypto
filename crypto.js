@@ -32,6 +32,31 @@ const helpers = {
 };
 
 const ciphers = {
+  vernam: {
+    encode: function (key, text){
+      key = this.generateRandomKey(text);
+      text = text.split("");
+      return text.map((curr, index, arr) => {
+        return (curr.charCodeAt(0) ^ key[index]);
+      });
+
+      return result;
+    },
+
+    decode: function (key, text){
+      return text.map((curr, index, arr) => {
+        return (text[index] ^ key[index]);
+      });
+    },
+
+    generateRandomKey: function (text){
+      text = text.split("");
+      return text.map((curr, index, arr) => {
+        return (Math.round(Math.random() * treshold));
+      });
+    }
+  },
+
   ceasar: {
     encode: function (key, text){
       let result = "";
