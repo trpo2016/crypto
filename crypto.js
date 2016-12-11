@@ -1,4 +1,4 @@
-const treshold = 50;
+// const treshold = 150;
 
 const helpers = {
   prettyPrint: function (badString){
@@ -34,26 +34,44 @@ const helpers = {
 const ciphers = {
   vernam: {
     encode: function (key, text){
-      key = this.generateRandomKey(text);
+      let result = "";
+
+      if (key.length != text.length)
+        key = this.generateRandomKey(text);
+      else if (key.length == text.length)
+        key = this.prepairKey(key);
+
       text = text.split("");
-      return text.map((curr, index, arr) => {
+      result = text.map((curr, index, arr) => {
         return (curr.charCodeAt(0) ^ key[index]);
       });
 
-      return result;
+      return helpers.prettyPrint(result);
     },
 
     decode: function (key, text){
-      return text.map((curr, index, arr) => {
-        return (text[index] ^ key[index]);
+      let result = "";
+      key = this.prepairKey(key);
+
+      text = text.split("");
+      result =  text.map((curr, index, arr) => {
+        return (curr.charCodeAt(0) ^ key[index]);
       });
+
+      return helpers.prettyPrint(result);
     },
 
     generateRandomKey: function (text){
+      console.log(`Generating random key...`);
       text = text.split("");
       return text.map((curr, index, arr) => {
-        return (Math.round(Math.random() * treshold));
+        return (Math.round(Math.random() * 10) -1); // from 0 to 9
       });
+    },
+
+    prepairKey: function (key){
+      return key.split("")
+                .map((curr, index) => { return curr.charCodeAt(0) % 10; });
     }
   },
 
@@ -71,7 +89,8 @@ const ciphers = {
     },
 
     decode: function (key, text){
-      return this.encode((-1)*key, text);
+      key = (26 - key) % 26;
+      return this.encode(key, text);
     }
   },
 

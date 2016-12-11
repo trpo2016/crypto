@@ -58,7 +58,6 @@ switch (c){
   case 'vernam': {
     if (!key) key = ciphers.vernam.generateRandomKey(text);
     result = handleCipher('vernam', key, text);
-    result = helpers.prettyPrint(result);
     console.log(result);
 
     break;
